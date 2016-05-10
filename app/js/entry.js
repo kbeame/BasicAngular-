@@ -1,1 +1,3 @@
-alert('hello from js');
+const angular = require('angular');
+
+const basicApp = angular.module('basicApp', []);

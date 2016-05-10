@@ -2,11 +2,13 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title></title>
+    <title>Kat Tries Angular</title>
+    <link rel="stylesheet" href="./css/style.css">
   </head>
-  <body>
-    <h1>Hello Kat!</h1>
-    
+  <body data-ng-app="basicApp">
+    <h1>{{hello}}</h1>
+    <input type="text" data-ng-model="hello">
+    <button data-ng-click="hello=' '">Press to Clear Input</button>
     <script src='./bundle.js'></script>
   </body>
 </html>
