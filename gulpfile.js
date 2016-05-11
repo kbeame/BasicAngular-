@@ -6,8 +6,6 @@ const webdriver_standalone = require('gulp-protractor').webdriver_standalone;
 const webdriver_update = require('gulp-protractor').webdriver_update;
 const exec = require('child_process').exec;
 
-var clientFiles = ['app**/*.js', 'test**/*.js'];
-
 var files = ['lib**/*.js', 'test/**/*.js', 'routes/**/*.js',
 'models/**/*.js', 'gulpfile.js', 'server.js'];
 var clientFiles = ['./app**/*.js'];
@@ -43,19 +41,19 @@ gulp.task('static', () => {
 });
 // selenium server update
 gulp.task('webdriver_update', webdriver_update);
-// selenium server start
+// // selenium server start
 gulp.task('webdriver_standalone', webdriver_standalone);
 // start dev server
 gulp.task('server', function(cb) {
-  exec('node server.js', function (err, stdout, stderr) {
-    console.log(stdout);
-    console.log(stderr);
+  exec('node server.js', function(err) {
+    // console.log(stdout);
+    // console.log(stderr);
     cb(err);
   });
 });
 
 // protractor
-gulp.task('integrationTest', ['webdriver_update'], function(cb) {
+gulp.task('integrationTest', function(cb) {
   gulp.src(['./test/integration/db-spec.js'])
   .pipe(protractor({
     configFile: './test/integration/config.js'
@@ -66,4 +64,6 @@ gulp.task('integrationTest', ['webdriver_update'], function(cb) {
 });
 
 
-gulp.task('default', ['webpack', 'static', 'webdriver_standalone', 'server', 'integrationTest']);
+gulp.task('default', ['lintServer', 'lintClient', 'webpack', 'static',
+ // 'webdriver_update', 'webdriver_standalone',
+ 'server', 'integrationTest']);
