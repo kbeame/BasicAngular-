@@ -1,11 +1,11 @@
+
 {
   "env": {
-    "mocha": true,
-    "node": true,
+    "browser": true,
     "es6": true
   },
   "globals": {
-
+    "angular": true,
   },
   "rules": {
     "indent": ["error", 2],

@@ -8,10 +8,21 @@ const exec = require('child_process').exec;
 
 var clientFiles = ['app**/*.js', 'test**/*.js'];
 
-gulp.task('lint', () => {
+var files = ['lib**/*.js', 'test/**/*.js', 'routes/**/*.js',
+'models/**/*.js', 'gulpfile.js', 'server.js'];
+var clientFiles = ['./app**/*.js'];
+
+gulp.task('lintServer', () => {
+  return gulp.src(files)
+  .pipe(eslint('./.eslintrc'))
+  .pipe(eslint.format());
+});
+
+
+gulp.task('lintClient', () => {
   return gulp.src(clientFiles)
-    .pipe(eslint('./.eslintrc'))
-    .pipe(eslint.format());
+  .pipe(eslint('./app/.eslintrc'))
+  .pipe(eslint.format());
 });
 
 gulp.task('webpack', () => {
