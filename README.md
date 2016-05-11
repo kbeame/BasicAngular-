@@ -14,10 +14,6 @@
 
 #### How to End-to-End Test:
 
-In the command line start the server (see step 1 in previous section).
+In the command line write **gulp**
 
-Type **protractor test/integration/config.js** in the command line.
-
-This will run the end-to-end tests.
-
-Note: You must have the server running to have these tests pass.
+This will run the linter and end-to-end tests.
