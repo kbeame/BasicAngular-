@@ -2,9 +2,8 @@ const gulp = require('gulp');
 const webpack = require('webpack-stream');
 const eslint = require('gulp-eslint');
 const protractor = require('gulp-protractor').protractor;
-const webdriver_standalone = require('gulp-protractor').webdriver_standalone;
-const webdriver_update = require('gulp-protractor').webdriver_update;
 const exec = require('child_process').exec;
+const server = require(__dirname + '/server.js');
 
 var files = ['lib**/*.js', 'test/**/*.js', 'routes/**/*.js',
 'models/**/*.js', 'gulpfile.js', 'server.js'];
@@ -39,31 +38,28 @@ gulp.task('static', () => {
   gulp.src('app/**/*.css')
    .pipe(gulp.dest('./build'));
 });
-// selenium server update
-gulp.task('webdriver_update', webdriver_update);
-// // selenium server start
-gulp.task('webdriver_standalone', webdriver_standalone);
-// start dev server
-gulp.task('server', function(cb) {
-  exec('node server.js', function(err) {
-    // console.log(stdout);
-    // console.log(stderr);
-    cb(err);
-  });
+
+// start dev server and selenium server
+gulp.task('server', function() {
+  exec('node server.js');
+  exec('webdriver-manager start');
 });
 
 // protractor
-gulp.task('integrationTest', function(cb) {
+gulp.task('integrationTest', ['server'], function() {
   gulp.src(['./test/integration/db-spec.js'])
   .pipe(protractor({
     configFile: './test/integration/config.js'
   }))
   .on('error', function(e) {
     throw new Error('Error' + e + 'in gulp file');
-  }).on('end', cb);
+  }).on('end', () => {
+    server.close();
+  });
 });
 
 
 gulp.task('default', ['lintServer', 'lintClient', 'webpack', 'static',
- // 'webdriver_update', 'webdriver_standalone',
- 'server', 'integrationTest']);
+'integrationTest']);
+
+gulp.task('test', ['integrationTest']);

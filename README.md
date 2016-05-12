@@ -17,3 +17,5 @@
 In the command line write **gulp**
 
 This will run the linter and end-to-end tests.
+
+If you just want to run tests write **test** into the command line.

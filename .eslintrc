@@ -4,12 +4,14 @@
     "node": true,
     "es6": true,
     "browser": true,
+    "jasmine": true,
+    "protractor": true,
   },
   "globals": {
     "element": true,
     "expect": true,
     "by": true,
-    "browser": true
+    "browser": true,
 
   },
   "rules": {
